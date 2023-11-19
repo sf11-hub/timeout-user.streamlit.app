@@ -1,6 +1,6 @@
-install: 
+setup:
 	 python -m pip install poetry
-	 poetry install
+	 poetry install --no-root
 
 run:
 	 poetry run streamlit run app.py
