@@ -1,41 +1,65 @@
-# import streamlit as st
-# import time
-# from threading import Timer
+import streamlit as st
+import os
+from dataclasses import dataclass
+# @st.cache_data
+# def get_timeout():
+#   return timeout_seconds
+from dataclasses_json import dataclass_json, LetterCase
 
-# st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
+from queue import Queue
+from utils.thread import keepAlive
 
-# # Function to reset the timer on user activity
-# def reset_timer():
-#     global timer
-#     timer.cancel()
-#     timer = Timer(timeout_seconds, timeout_callback)
-#     timer.start()
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass(slots=True)
+class App:
+  queue: Queue = Queue()
+  _timeout: int = 1
 
-# # Function to handle user inactivity timeout
-# def timeout_callback():
-#     st.session_state.is_timed_out = True
-#     st.experimental_rerun()
 
-# # Set timeout duration in seconds
-# timeout_seconds = st.sidebar.slider("Set Timeout (seconds)", 1, 300, 2,key="timeout_seconds")
+  def __post_init__(self):
+    print("creating new app instance")
+  
+  @property
+  def timeout_ms(self):
+    return self.timeout*1000  
+  
+  @property
+  def timeout(self):
+    return self._timeout
+  
+  @timeout.setter
+  def timeout(self, value):      
+    
+    timeout_changed = self._timeout != value
+    
+    print(self._timeout, value)
+    
+    if not timeout_changed:
+      print("timeout not changed")
+      return
+    
+    self._timeout = value
+    # self.queue.put(value)
+    print("rerun after setting timeout")
+    st.rerun()
+    
 
-# # Initialize timer
-# timer = Timer(timeout_seconds, timeout_callback)
-# timer.start()
+def onchange( ):
+  # cannot pass st.rerun in callback
+  f"Timeout after user inactivity of {app.timeout} seconds"
+  
+  print("reruns depreacted timeout")
+  
+  
+  
+app = st.session_state.get('app', App())
 
-# # Check if the session is timed out
-# if hasattr(st.session_state, "is_timed_out") and st.session_state.is_timed_out:
-#     st.warning("Session timed out due to inactivity. Refresh the page to start a new session.")
-#     st.markdown(f"""<script>alert("session timeout after {timeout_seconds}s"); </script>""")
-# else:
-#     # Listen for user activity and reset the timer
-#     st.session_state.is_timed_out = False
+app.timeout = st.sidebar.slider("Set Timeout (seconds)", 1, 300, value=app.timeout, key="timeout_seconds",on_change=onchange)
 
-#     st.write("# Streamlit App with Timeout")
 
-#     # Add your app content here
-#     st.write("This is your Streamlit app content.")
+script_path = os.path.join('static', 'timeout.js')
 
-#     # Reset the timer on user activity
-#     st.text("Interact with the app to reset the timer.")
-#     reset_timer()
+with open(script_path) as f1:
+  script_content = f1.read()
+  script_content.replace('1000', f'{app.timeout}')
+  st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)

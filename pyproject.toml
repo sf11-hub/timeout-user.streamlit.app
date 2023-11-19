@@ -26,6 +26,9 @@ streamlit = "^1.25.0"
 dataclasses-json = "^0.6.2"
 
 
+[tool.poetry.group.dev.dependencies]
+watchdog = "^3.0.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
