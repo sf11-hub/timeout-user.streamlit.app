@@ -3,7 +3,6 @@ const TIMEOUT_MS = 1000;
 function timeoutHandler() {
     alert("User inactive for too long");
     //call the equivalent function
-    window.location.href = "/";
 }
 
 // Set up the timer

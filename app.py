@@ -1,39 +1,41 @@
-import streamlit as st
-import time
-from threading import Timer
+# import streamlit as st
+# import time
+# from threading import Timer
 
-# Function to reset the timer on user activity
-def reset_timer():
-    global timer
-    timer.cancel()
-    timer = Timer(timeout_seconds, timeout_callback)
-    timer.start()
+# st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
 
-# Function to handle user inactivity timeout
-def timeout_callback():
-    st.session_state.is_timed_out = True
-    st.experimental_rerun()
+# # Function to reset the timer on user activity
+# def reset_timer():
+#     global timer
+#     timer.cancel()
+#     timer = Timer(timeout_seconds, timeout_callback)
+#     timer.start()
 
-# Set timeout duration in seconds
-timeout_seconds = st.sidebar.slider("Set Timeout (seconds)", 10, 300, 60)
+# # Function to handle user inactivity timeout
+# def timeout_callback():
+#     st.session_state.is_timed_out = True
+#     st.experimental_rerun()
 
-# Initialize timer
-timer = Timer(timeout_seconds, timeout_callback)
-timer.start()
+# # Set timeout duration in seconds
+# timeout_seconds = st.sidebar.slider("Set Timeout (seconds)", 1, 300, 2,key="timeout_seconds")
 
-# Check if the session is timed out
-if hasattr(st.session_state, "is_timed_out") and st.session_state.is_timed_out:
-    st.warning("Session timed out due to inactivity. Refresh the page to start a new session.")
-else:
-    # Listen for user activity and reset the timer
-    st.session_state.is_timed_out = False
-    st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
+# # Initialize timer
+# timer = Timer(timeout_seconds, timeout_callback)
+# timer.start()
 
-    st.write("# Streamlit App with Timeout")
+# # Check if the session is timed out
+# if hasattr(st.session_state, "is_timed_out") and st.session_state.is_timed_out:
+#     st.warning("Session timed out due to inactivity. Refresh the page to start a new session.")
+#     st.markdown(f"""<script>alert("session timeout after {timeout_seconds}s"); </script>""")
+# else:
+#     # Listen for user activity and reset the timer
+#     st.session_state.is_timed_out = False
 
-    # Add your app content here
-    st.write("This is your Streamlit app content.")
+#     st.write("# Streamlit App with Timeout")
 
-    # Reset the timer on user activity
-    st.text("Interact with the app to reset the timer.")
-    reset_timer()
+#     # Add your app content here
+#     st.write("This is your Streamlit app content.")
+
+#     # Reset the timer on user activity
+#     st.text("Interact with the app to reset the timer.")
+#     reset_timer()
