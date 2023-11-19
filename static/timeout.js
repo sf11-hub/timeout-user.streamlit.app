@@ -1,4 +1,4 @@
-const TIMEOUT_MS = 1000;
+const TIMEOUT_MS = 1000; //this constant is replaced in v0-app
 
 function timeoutHandler() {
     alert("User inactive for too long");
