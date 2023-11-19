@@ -1,0 +1,43 @@
+# https://python-poetry.org/docs/pyproject/
+[tool.poetry]
+name = "timeout-user.streamlit.app"
+version = "0.1.0"
+description = "Demonstrates how to timeout a user based on inactivity in streamlit"
+authors = ["Nasfame <laciferin@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://timeout-user.streamlit.app"
+repository = "https://github.com/Nasfame/timeout-user.streamlit.app"
+documentation = "https://github.com/Nasfame/timeout-user.streamlit.app"
+keywords = ["timeout-user-in-streamlit", "streamlit"]
+
+
+packages = []
+
+classifiers = [
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3.x",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.25.0"
+
+[build-system]
+# requires = ["python>=3.10", "setuptools", "wheel"]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+
+
+[tool.poetry.extras]
+dev = ['pytest']
+
+# A list of all of the optional dependencies, some of which are included in the
+# poetry install --extras
+# poetry install --all-extras
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/Nasfame/timeout-user.streamlit.app/issues"
