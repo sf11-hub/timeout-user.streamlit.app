@@ -8,6 +8,10 @@ import streamlit as st
 #   return timeout_seconds
 from dataclasses_json import dataclass_json, LetterCase
 
+st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
+
+st.header("User Inactivity Demo App v0")
+
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(slots=True)
@@ -44,17 +48,16 @@ class App:
 
 def onchange():
     # cannot pass st.rerun in callback
-    f"Timeout after user inactivity of {app.timeout} seconds"
 
     print("reruns depreacted timeout")
 
-
-st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
 
 app = st.session_state.get('app', App())
 
 app.timeout = st.sidebar.slider("Set Timeout (seconds)", 1, 300, value=app.timeout, key="timeout_seconds",
                                 on_change=onchange)
+
+st.write(f"Times out user after inactivity of {app.timeout} seconds")
 
 script_path = os.path.join('static', 'timeout.js')
 
@@ -62,3 +65,16 @@ with open(script_path) as f1:
     script_content = f1.read()
     script_content.replace('1000', f'{app.timeout}')
     st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)
+    print("timeout updated in script")
+
+st.markdown("""
+<script>
+    function showAlert() {
+        alert("Hello from JavaScript!");
+    }
+</script>
+""", unsafe_allow_html=True)
+
+# Button to trigger the JavaScript function
+if st.button("Click me to trigger JavaScript"):
+    st.markdown("<script> showAlert(); </script>", unsafe_allow_html=True)
