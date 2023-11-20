@@ -49,7 +49,6 @@ class App:
 
 def onchange():
     # cannot pass st.rerun in callback
-
     print("reruns depreacted timeout")
 
 
@@ -64,21 +63,15 @@ script_path = os.path.join('static', 'timeout.js')
 
 with open(script_path) as f1:
     script_content = f1.read()
-    script_content.replace('1000', f'{app.timeout}')
-    st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)
+    script_content = script_content.replace('1000', f'{app.timeout}')
+    # st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)
     print("timeout updated in script")
 
-# Button to trigger the JavaScript function
-
-components.html(
-    """
-    <script> 
-     
-      function showAlert() {
-        alert("Hello from JavaScript!");
-    }
-    showAlert()
-     </script>
-    """,
-    height=600,
-)
+    components.html(
+        f"""
+        <script> 
+        {script_content}
+         </script>
+        """,
+        # height=600,
+    )
