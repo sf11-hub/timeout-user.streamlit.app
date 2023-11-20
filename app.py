@@ -62,32 +62,10 @@ st.write(f"Times out user after inactivity of {app.timeout} seconds")
 script_path = os.path.join('static', 'timeout.js')
 
 with open(script_path) as f1:
-    # script_content = f1.read()
-    script_content = """
-    const TIMEOUT_MS = {timeout_ms}; //this constant is replaced in v0-app
-    function timeoutHandler() {
-        alert("User inactive for too long");
-        console.log("User inactivity timed out");
-        //call the equivalent function
-    }
+    script_content = f1.read()
 
-    // Set up the timer
-    let timeoutTimer;
-    
-    function resetTimer() {
-        clearTimeout(timeoutTimer);
-        timeoutTimer = setTimeout(timeoutHandler, TIMEOUT_MS);
-        console.log("timeout user: reset")
-    }
-
-    //document.removeEventListener("mousemove", resetTimer);
-    //document.removeEventListener("keypress", resetTimer);
-
-    document.addEventListener("mousemove", resetTimer);
-    document.addEventListener("keypress", resetTimer);
-    resetTimer();
-    """.format(timeout_ms=app.timeout_ms)
-    # script_content = script_content.replace('3000', f'{app.timeout_ms}')
+    # script_content = script_content.format('timeout_ms', app.timeout_ms)
+    script_content = script_content.replace('3000', f'{app.timeout_ms}')
     # st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)
     print("timeout updated in script")
 
