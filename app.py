@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from queue import Queue
 
 import streamlit as st
+import streamlit.components.v1 as components
 # @st.cache_data
 # def get_timeout():
 #   return timeout_seconds
@@ -67,14 +68,17 @@ with open(script_path) as f1:
     st.markdown(f"<script> {f1.read()}</script>", unsafe_allow_html=True)
     print("timeout updated in script")
 
-st.markdown("""
-<script>
-    function showAlert() {
+# Button to trigger the JavaScript function
+
+components.html(
+    """
+    <script> 
+     
+      function showAlert() {
         alert("Hello from JavaScript!");
     }
-</script>
-""", unsafe_allow_html=True)
-
-# Button to trigger the JavaScript function
-if st.button("Click me to trigger JavaScript"):
-    st.markdown("<script> showAlert(); </script>", unsafe_allow_html=True)
+    showAlert()
+     </script>
+    """,
+    height=600,
+)
