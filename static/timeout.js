@@ -1,4 +1,4 @@
-const TIMEOUT_MS = 1000; //this constant is replaced in v0-app
+const TIMEOUT_MS = 3000; //this constant is replaced in v0-app
 
 function timeoutHandler() {
     alert("User inactive for too long");
@@ -14,6 +14,9 @@ function resetTimer() {
     timeoutTimer = setTimeout(timeoutHandler, TIMEOUT_MS);
     console.log("timeout user: reset")
 }
+
+//document.removeEventListener("mousemove", resetTimer);
+//document.removeEventListener("keypress", resetTimer);
 
 document.addEventListener("mousemove", resetTimer);
 document.addEventListener("keypress", resetTimer);
