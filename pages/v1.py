@@ -1,8 +1,11 @@
-# import streamlit as st
+import streamlit as st
+
 # import time
 # from threading import Timer
 
 # st.set_page_config(page_title="Inactivity Timeout", page_icon="⏰")
+
+st.header("v1 will be implemented in python, [wip]")
 
 # # Function to reset the timer on user activity
 # def reset_timer():
